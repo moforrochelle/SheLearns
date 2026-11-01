@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign up</title>
+</head>
+<body>
+  <h1>SheLearns: create an account</h1>
+
+  {% if error %}
+    <p><strong>{{ error }}</strong></p>
+  {% endif %}
+
+  <p><strong>Choose a nickname as your username, not your real name.</strong>
+  We do not ask for your email, phone number or school.</p>
+
+  <form method="post">
+    <p><input name="username" placeholder="Username (nickname)" maxlength="20" required></p>
+    <p><input name="password" type="password" placeholder="Password (8+ characters)" required></p>
+    <p><input name="confirm" type="password" placeholder="Repeat password" required></p>
+    <button>Create account</button>
+  </form>
+
+  <p><small>There is no password reset, so remember your password.</small></p>
+  <p>Already have an account? <a href="/login">Log in</a></p>
+</body>
+</html>

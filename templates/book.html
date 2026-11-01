@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ book.title }}</title>
+</head>
+<body>
+  <h1>{{ book.title }}</h1>
+  <p>by {{ book.author }}</p>
+
+  {% if error %}
+    <p>{{ error }}</p>
+  {% elif summary %}
+    <p style="white-space: pre-wrap;">{{ summary.text }}</p>
+
+    <p><small>
+      {% if summary.reviewed %}
+        Reviewed by the SheLearns team.
+      {% else %}
+        Not yet reviewed.
+      {% endif %}
+      This summary was written with AI and may contain errors.
+      Read the real book to get the author's own words.
+    </small></p>
+  {% endif %}
+
+  <a href="/books">Back to book summaries</a>
+</body>
+</html>

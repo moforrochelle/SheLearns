@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SheLearns{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% block menu %}
+  <button class="menu-btn" id="openMenu" type="button" aria-label="Open menu">&#9776; Menu</button>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="drawer" id="drawer" aria-label="Menu">
+    <div class="drawer-head">
+      <strong>Menu</strong>
+      <button class="small" id="closeMenu" type="button" aria-label="Close menu">Close</button>
+    </div>
+
+    {% if username %}
+      <p class="drawer-user">Logged in as <strong>{{ username }}</strong></p>
+    {% endif %}
+
+    <a href="/">Home</a>
+    <a href="/plan">My study plan</a>
+    <a href="/lessons">Lessons</a>
+    <a href="/books">Book summaries</a>
+    <a href="/groups">Groups to join</a>
+    <a href="/community">Community</a>
+    <a href="/board">Board</a>
+    {% if is_admin %}<a class="admin" href="/admin">Admin: review posts</a>{% endif %}
+
+    <div class="drawer-logout">
+      <form method="post" action="/logout">
+        <button type="submit">Log out</button>
+      </form>
+    </div>
+  </aside>
+
+  <script>
+    var drawer = document.getElementById('drawer');
+    var overlay = document.getElementById('overlay');
+
+    function openMenu()  { drawer.classList.add('open');    overlay.classList.add('open'); }
+    function closeMenu() { drawer.classList.remove('open'); overlay.classList.remove('open'); }
+
+    document.getElementById('openMenu').addEventListener('click', openMenu);
+    document.getElementById('closeMenu').addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  </script>
+{% endblock %}
+
+  <div class="container">
+    <header class="top">
+      <h1>{% block heading %}SheLearns{% endblock %}</h1>
+    </header>
+
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>

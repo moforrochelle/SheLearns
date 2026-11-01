@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Groups to join</title>
+</head>
+<body>
+  <h1>Groups to join</h1>
+
+  {% for g in groups %}
+    <div>
+      <h3>{{ g.name }}</h3>
+      <p>{{ g.about }}</p>
+      {% if g.working %}
+        <a href="{{ g.link }}" target="_blank">Visit</a>
+        <small>(link checked {{ g.checked }})</small>
+      {% else %}
+        <small>Link not available right now.</small>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <a href="/">Back</a>
+</body>
+</html>

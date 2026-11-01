@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}SheLearns{% endblock %}
+{% block heading %}SheLearns{% endblock %}
+
+{% block content %}
+
+  <a class="btn plan-btn" href="/plan">Generate my study plan</a>
+
+  <div class="card">
+    <h2>Add a subject</h2>
+    <form method="post" action="/add_subject">
+      <label for="name">Subject</label>
+      <input id="name" name="name" placeholder="e.g. Maths" required>
+
+      <div class="row">
+        <div>
+          <label for="weakness">Weakness (1 to 5)</label>
+          <input id="weakness" name="weakness" type="number" min="1" max="5" placeholder="1-5" required>
+        </div>
+        <div>
+          <label for="exam_date">Exam date (optional)</label>
+          <input id="exam_date" name="exam_date" type="date">
+        </div>
+      </div>
+
+      <button class="full">Add subject</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Add a free slot</h2>
+    <form method="post" action="/add_slot">
+      <label for="day">Day</label>
+      <select id="day" name="day">
+        <option>Mon</option><option>Tue</option><option>Wed</option>
+        <option>Thu</option><option>Fri</option><option>Sat</option><option>Sun</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label for="start">From</label>
+          <input id="start" name="start" type="time" required>
+        </div>
+        <div>
+          <label for="end">To</label>
+          <input id="end" name="end" type="time" required>
+        </div>
+      </div>
+
+      <button class="full">Add slot</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>My subjects</h2>
+    <ul class="list">
+      {% for s in subjects %}
+        <li>
+          <strong>{{ s.name }}</strong><br>
+          <span class="meta">Weakness {{ s.weakness }} &middot; Exam: {{ s.exam_date or "none" }}</span>
+        </li>
+      {% else %}
+        <li class="empty">No subjects yet. Add your first one above.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>My free slots</h2>
+    <ul class="list">
+      {% for t in slots %}
+        <li><strong>{{ t.day }}</strong> &middot; {{ t.start }} to {{ t.end }}</li>
+      {% else %}
+        <li class="empty">No free slots yet. Add when you can study.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="danger-zone">
+    <form method="post" action="/account/delete"
+          onsubmit="return confirm('Delete your account and all your data? This cannot be undone.');">
+      <button>Delete my account and data</button>
+    </form>
+  </div>
+
+{% endblock %}

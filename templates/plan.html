@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your plan</title>
+</head>
+<body>
+  <h1>Your plan</h1>
+
+  <h2>Subjects ranked</h2>
+  <ol>
+    {% for s in ranked %}
+      <li>{{ s.name }}: score {{ score(s)|round(2) }} (weakness {{ s.weakness }})</li>
+    {% endfor %}
+  </ol>
+
+  <h2>Study sessions</h2>
+  {% for r in plan_rows %}
+    <div>
+      <p>{{ r.slot.day }} {{ r.slot.start }} to {{ r.slot.end }}: <strong>{{ r.subject.name }}</strong></p>
+      <form method="post" action="/log">
+        <input type="hidden" name="subject_id" value="{{ r.subject.id }}">
+        <input type="hidden" name="slot_id" value="{{ r.slot.id }}">
+        <button name="outcome" value="understood">Understood</button>
+        <button name="outcome" value="confused">Still confused</button>
+        <button name="outcome" value="skipped">Skipped</button>
+      </form>
+    </div>
+  {% endfor %}
+
+  <h2>Session log</h2>
+  <ul>
+    {% for x in sessions %}
+      <li>{{ x.date }}: {{ x.subject }}, {{ x.slot }}, {{ x.outcome }}</li>
+    {% endfor %}
+  </ul>
+
+  <a href="/">Back</a>
+</body>
+</html>

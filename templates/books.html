@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book summaries</title>
+</head>
+<body>
+  <h1>Book summaries</h1>
+  <p>Short summaries to help you decide what to read. Pick a book.</p>
+
+  <ul>
+    {% for b in books %}
+      <li>
+        <a href="/book/{{ b.id }}">{{ b.title }}</a> by {{ b.author }}
+        {% if b.id in saved %}<small>(ready)</small>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <a href="/">Back</a>
+</body>
+</html>

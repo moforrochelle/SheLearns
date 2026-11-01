@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Board</title>
+</head>
+<body>
+  <h1>Community board</h1>
+  <p>Share a tip or ask a question about studying. Every post is checked
+  by the SheLearns team before it appears.</p>
+  <p><strong>Never share your real name, phone number, address, school or
+  links.</strong></p>
+
+  {% if error %}
+    <p><strong>{{ error }}</strong></p>
+  {% endif %}
+
+  <div class="board-rules">
+    <h3>Board Rules</h3>
+    <p>Welcome to the SheLearns board. This is a place for girls to help each other learn. Please follow these rules so everyone feels safe.</p>
+    <ol>
+      <li><strong>Be kind.</strong> No insults, teasing, or making fun of anyone's questions or answers. Every girl here is still learning.</li>
+      <li><strong>Keep your private information private.</strong> Do not share your real name, phone number, address, school, or social media. Use only your username.</li>
+      <li><strong>Do not ask others for their private information.</strong> If someone asks for yours, do not answer, and report the post.</li>
+      <li><strong>Stay on topic.</strong> Post about studying, school subjects, study tips, or finding a study partner.</li>
+      <li><strong>Share only advice you trust.</strong> If you are not sure an answer is correct, say so. Never give advice about health, medicine, or anything dangerous. Ask a teacher or a trusted adult instead.</li>
+      <li><strong>Do not post links to other websites or groups</strong> unless the moderator has approved them.</li>
+      <li><strong>Report anything that worries you.</strong> Use the Report button if a post is unkind, unsafe, or makes you uncomfortable. You will not get in trouble for reporting.</li>
+    </ol>
+    <p><strong>How it works:</strong> Every post is checked by a moderator before it appears. Some posts may be blocked automatically if they contain things like phone numbers. If your post is not approved, you can change it and try again.</p>
+    <p>If you ever feel unsafe or someone makes you uncomfortable, talk to a trusted adult, such as a parent, guardian, or teacher.</p>
+  </div>
+
+  <form method="post" action="/board/post">
+    <p><textarea name="text" rows="4" cols="50" maxlength="{{ max_length }}"
+      placeholder="Write your post (up to {{ max_length }} characters)" required></textarea></p>
+    <button>Send for review</button>
+  </form>
+
+  {% if mine %}
+    <h2>Your posts that are not showing</h2>
+    {% for p in mine %}
+      <div>
+        <p style="white-space: pre-wrap;">{{ p.text }}</p>
+        <p><small>
+          {% if p.status == "pending" %}Waiting for review{% endif %}
+          {% if p.status == "rejected" %}Not approved{% endif %}
+          {% if p.status == "reported" %}Hidden while it is reviewed again{% endif %}
+        </small></p>
+        <form method="post" action="/board/delete/{{ p.id }}">
+          <button>Delete</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <h2>Posts</h2>
+  {% for p in approved %}
+    <div>
+      <p><strong>{{ p.author }}</strong></p>
+      <p style="white-space: pre-wrap;">{{ p.text }}</p>
+      {% if p.author_key == my_key %}
+        <form method="post" action="/board/delete/{{ p.id }}">
+          <button>Delete my post</button>
+        </form>
+      {% else %}
+        <form method="post" action="/board/report/{{ p.id }}">
+          <button>Report this post</button>
+        </form>
+      {% endif %}
+      <hr>
+    </div>
+  {% else %}
+    <p>No posts yet. Be the first to write one.</p>
+  {% endfor %}
+
+  <a href="/">Back</a>
+</body>
+</html>

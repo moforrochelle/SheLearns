@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Community</title>
+</head>
+<body>
+  <h1>Community: find a study buddy</h1>
+
+  {% if error %}
+    <p><strong>{{ error }}</strong></p>
+  {% endif %}
+
+  {% if not me %}
+    <p>If you join, other girls can see your <strong>username</strong>, your
+    <strong>subject names</strong> and your <strong>free times</strong>, so we
+    can find girls who study the same thing at the same time.
+    Nothing else is shared.</p>
+
+    <h3>What would be shared</h3>
+    <p>Username: {{ username }}</p>
+    <p>Subjects:
+      {% for s in subjects %}{{ s.name }}{% if not loop.last %}, {% endif %}
+      {% else %}none yet{% endfor %}
+    </p>
+    <p>Free times:
+      {% for t in slots %}{{ t.day }} {{ t.start }}-{{ t.end }}{% if not loop.last %}, {% endif %}
+      {% else %}none yet{% endfor %}
+    </p>
+
+    <form method="post" action="/community/join">
+      <button>Share my subjects and free times</button>
+    </form>
+
+  {% else %}
+    <p>You are sharing as <strong>{{ me.nickname }}</strong>.</p>
+
+    <form method="post" action="/community/join" style="display:inline;">
+      <button>Update what I share</button>
+    </form>
+    <form method="post" action="/community/leave" style="display:inline;">
+      <button>Stop sharing</button>
+    </form>
+
+    <h2>Your matches</h2>
+    {% for m in matches %}
+      <div>
+        <h3>{{ m.nickname }}
+          {% if m.demo %}<small>(demo profile)</small>{% endif %}
+        </h3>
+        <p>Same subjects: {{ m.shared | join(", ") }}</p>
+        <p>Free at the same time:</p>
+        <ul>
+          {% for t in m.times %}
+            <li>{{ t.day }} from {{ t.start }} ({{ t.minutes }} minutes)</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <p>No matches yet. Add more subjects or free times, then update what you share.</p>
+    {% endfor %}
+  {% endif %}
+
+  <p><small>Demo profiles are made-up examples for this prototype.</small></p>
+  <a href="/">Back</a>
+</body>
+</html>

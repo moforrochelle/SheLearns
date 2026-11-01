@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ topic.title }}</title>
+</head>
+<body>
+  <h1>{{ topic.title }}</h1>
+
+  {% if error %}
+    <p>{{ error }}</p>
+  {% elif lesson %}
+    <p style="white-space: pre-wrap;">{{ lesson.text }}</p>
+
+    <p><small>
+      {% if lesson.reviewed %}
+        Reviewed by the SheLearns team.
+      {% else %}
+        Not yet reviewed.
+      {% endif %}
+      This lesson was written with AI and may contain errors.
+      Check with a trusted adult or health worker.
+    </small></p>
+  {% endif %}
+
+  <a href="/lessons">Back to lessons</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lessons</title>
+</head>
+<body>
+  <h1>Lessons</h1>
+  <p>Short lessons to read in your free time. Pick a topic.</p>
+
+  <ul>
+    {% for t in topics %}
+      <li>
+        <a href="/lesson/{{ t.id }}">{{ t.title }}</a>
+        {% if t.id in saved %}<small>(ready)</small>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <a href="/">Back</a>
+</body>
+</html>
