@@ -1,0 +1,50 @@
+DATA
+  train    1500 girls   34512 sessions   62.1% understood
+  test      500 girls   11480 sessions   61.1% understood
+  shifted   500 girls   11492 sessions   46.0% understood
+
+CROSS-VALIDATION ON TRAINING GIRLS (5 folds, split by girl, AUC)
+  Logistic regression   0.694 +/- 0.004
+  Random forest         0.696 +/- 0.003
+
+RESULTS ON NEW GIRLS, SAME KIND OF WORLD (test)
+Model                               Accuracy     AUC   Brier  LogLoss
+Always the average rate                0.611   0.500   0.238    0.668
+By weakness level only                 0.637   0.651   0.221    0.633
+Logistic regression                    0.676   0.699   0.211    0.611
+Random forest                          0.674   0.700   0.209    0.607
+
+RESULTS ON NEW GIRLS, DIFFERENT WORLD (shifted)
+Model                               Accuracy     AUC   Brier  LogLoss
+Always the average rate                0.460   0.500   0.274    0.743
+By weakness level only                 0.626   0.652   0.247    0.689
+Logistic regression                    0.578   0.657   0.251    0.703
+Random forest                          0.572   0.657   0.252    0.701
+
+CALIBRATION OF THE LOGISTIC MODEL (test girls)
+Predicted range     Sessions  Predicted    Real
+(0.2, 0.4]              1027       0.36    0.25
+(0.4, 0.6]              4405       0.51    0.52
+(0.6, 0.8]              4294       0.70    0.70
+(0.8, 1.0]              1754       0.85    0.82
+
+WHAT THE LOGISTIC MODEL LEARNED (features scaled to the same size;
+positive = more likely to understand, negative = less likely)
+  weakness            -0.746
+  n_sessions          +0.439
+  success_rate        -0.248
+  days_since_last     -0.169
+  last_outcome        -0.147
+  never_studied       +0.110
+  days_to_exam        +0.025
+
+RANDOM FOREST FEATURE IMPORTANCE (share of the decisions, adds up to 1)
+  weakness             0.317
+  n_sessions           0.225
+  days_to_exam         0.165
+  success_rate         0.154
+  days_since_last      0.078
+  last_outcome         0.052
+  never_studied        0.008
+
+Saved the logistic model to ml_model.json

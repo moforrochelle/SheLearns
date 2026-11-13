@@ -5,10 +5,8 @@
 
 {% block content %}
 
-  <a class="btn plan-btn" href="/plan">Generate my study plan</a>
-
   <div class="card">
-    <h2>Add a subject</h2>
+    <h2>1. Add a subject</h2>
     <form method="post" action="/add_subject">
       <label for="name">Subject</label>
       <input id="name" name="name" placeholder="e.g. Maths" required>
@@ -29,7 +27,7 @@
   </div>
 
   <div class="card">
-    <h2>Add a free slot</h2>
+    <h2>2. Add a free slot</h2>
     <form method="post" action="/add_slot">
       <label for="day">Day</label>
       <select id="day" name="day">
@@ -75,6 +73,12 @@
         <li class="empty">No free slots yet. Add when you can study.</li>
       {% endfor %}
     </ul>
+  </div>
+
+  <div class="card">
+    <h2>3. Get your plan</h2>
+    <p class="note">When you have added your subjects and free times, press the button to see what to study and when.</p>
+    <a class="btn plan-btn" href="/plan" style="margin-bottom:0;">Generate my study plan</a>
   </div>
 
   <div class="danger-zone">

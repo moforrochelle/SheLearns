@@ -19,11 +19,17 @@ def make_subject(name, weakness, exam_date=None, last_studied=None):
 
 
 def days_until(exam_date):
-    """Days left before the exam. 999 means no exam."""
+    """Days left before the exam. 999 means no exam.
+
+    An exam that has already passed counts as "no exam", so it no longer
+    pushes that subject to the top of the plan.
+    """
     if exam_date is None:
         return 999
     delta = (exam_date - date.today()).days
-    return max(delta, 0)
+    if delta < 0:
+        return 999
+    return delta
 
 
 def days_since(last_studied):

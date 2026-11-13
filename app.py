@@ -134,7 +134,9 @@ def is_admin():
 
 @app.before_request
 def require_login():
-    if request.endpoint in ("login", "register", "static"):
+    # "home" is allowed through: it shows the welcome page to visitors
+    # who are not logged in, and the planner to those who are.
+    if request.endpoint in ("home", "login", "register", "static"):
         return None
     key = session.get("user")
     if not key or key not in load_users():
@@ -200,7 +202,7 @@ def login():
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
-    return redirect(url_for("login"))
+    return redirect(url_for("home"))
 
 
 @app.route("/whoami")
@@ -445,7 +447,12 @@ def board_page(error=None):
 
 @app.route("/")
 def home():
-    subjects, slots, _ = load_user_data(session["user"])
+    key = session.get("user")
+    if not key or key not in load_users():
+        # Not logged in: show the welcome page instead of the login form.
+        session.clear()
+        return render_template("welcome.html")
+    subjects, slots, _ = load_user_data(key)
     return render_template("home.html", subjects=subjects, slots=slots)
 
 
@@ -743,7 +750,7 @@ def delete_account():
     save_posts(posts)
 
     session.clear()
-    return redirect(url_for("register"))
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":

@@ -1,33 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Review posts</title>
-</head>
-<body>
-  <h1>Review posts</h1>
+{% extends "base.html" %}
 
-  {% for p in queue %}
-    <div>
-      <p><strong>{{ p.author }}</strong>
-        <small>
-          {% if p.status == "reported" %}(reported by a user){% else %}(new){% endif %}
-        </small>
-      </p>
-      <p style="white-space: pre-wrap;">{{ p.text }}</p>
-      <form method="post" action="/admin/decide/{{ p.id }}/approve" style="display:inline;">
-        <button>Approve</button>
-      </form>
-      <form method="post" action="/admin/decide/{{ p.id }}/reject" style="display:inline;">
-        <button>Reject</button>
-      </form>
-      <hr>
-    </div>
-  {% else %}
-    <p>Nothing to review.</p>
-  {% endfor %}
+{% block title %}Review posts{% endblock %}
+{% block heading %}Review posts{% endblock %}
 
-  <a href="/">Back</a>
-</body>
-</html>
+{% block content %}
+
+  <p class="intro">Approve a post to show it on the board, or reject it to keep it hidden.</p>
+
+  <div class="card">
+    {% for p in queue %}
+      <div class="post">
+        <div class="author">
+          {{ p.author }}
+          {% if p.status == "reported" %}
+            <span class="badge orange">Reported by a user</span>
+          {% else %}
+            <span class="badge">New</span>
+          {% endif %}
+        </div>
+        <div class="text">{{ p.text }}</div>
+        <div class="actions">
+          <form method="post" action="/admin/decide/{{ p.id }}/approve">
+            <button>Approve</button>
+          </form>
+          <form method="post" action="/admin/decide/{{ p.id }}/reject">
+            <button class="danger">Reject</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <p class="empty">Nothing to review.</p>
+    {% endfor %}
+  </div>
+
+  <a class="back" href="/">Back to home</a>
+
+{% endblock %}

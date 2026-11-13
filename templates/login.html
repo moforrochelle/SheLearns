@@ -1,23 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Log in</title>
-</head>
-<body>
-  <h1>SheLearns: log in</h1>
+{% extends "base.html" %}
 
-  {% if error %}
-    <p><strong>{{ error }}</strong></p>
-  {% endif %}
+{% block title %}Log in{% endblock %}
+{% block menu %}{% endblock %}
+{% block heading %}SheLearns{% endblock %}
 
-  <form method="post">
-    <p><input name="username" placeholder="Username" required></p>
-    <p><input name="password" type="password" placeholder="Password" required></p>
-    <button>Log in</button>
-  </form>
+{% block content %}
 
-  <p>New here? <a href="/register">Create an account</a></p>
-</body>
-</html>
+  <div class="card">
+    <h2>Log in</h2>
+
+    {% if error %}
+      <div class="notice">{{ error }}</div>
+    {% endif %}
+
+    <form method="post">
+      <label for="username">Username</label>
+      <input id="username" name="username" placeholder="Username" required>
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Password" required>
+
+      <button class="full">Log in</button>
+    </form>
+  </div>
+
+  <p class="auth-link">New here? <a href="/register">Create an account</a></p>
+
+{% endblock %}

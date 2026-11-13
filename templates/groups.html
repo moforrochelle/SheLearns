@@ -1,26 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Groups to join</title>
-</head>
-<body>
-  <h1>Groups to join</h1>
+{% extends "base.html" %}
+
+{% block title %}Groups to join{% endblock %}
+{% block heading %}Groups to join{% endblock %}
+
+{% block content %}
+
+  <p class="intro">Organisations that support girls and women in learning and technology.</p>
 
   {% for g in groups %}
-    <div>
-      <h3>{{ g.name }}</h3>
+    <div class="card">
+      <h2>{{ g.name }}</h2>
       <p>{{ g.about }}</p>
-      {% if g.working %}
-        <a href="{{ g.link }}" target="_blank">Visit</a>
-        <small>(link checked {{ g.checked }})</small>
+
+      {% if g.link and g.working %}
+        <a class="btn full" href="{{ g.link }}" target="_blank" rel="noopener noreferrer">Visit website</a>
+        <p class="note">We checked this link today and it opens.</p>
+      {% elif g.link %}
+        <p class="note"><span class="badge orange">Link not opening</span> We could not open this link right now. Try again later.</p>
       {% else %}
-        <small>Link not available right now.</small>
+        <p class="note"><span class="badge orange">Link coming soon</span> We have not confirmed the website for this group yet.</p>
       {% endif %}
     </div>
+  {% else %}
+    <p class="empty">No groups to show yet.</p>
   {% endfor %}
 
-  <a href="/">Back</a>
-</body>
-</html>
+  <p class="note">Before joining any group, ask a parent, guardian or teacher, and never share your phone number or address with people you have not met.</p>
+
+  <a class="back" href="/">Back to home</a>
+
+{% endblock %}

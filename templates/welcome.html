@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to SheLearns</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .hero {
+      background: linear-gradient(160deg, #5b21b6 0%, #7c3aed 55%, #a78bfa 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 20px 64px;
+      border-radius: 0 0 32px 32px;
+    }
+
+    .hero-inner { max-width: 560px; margin: 0 auto; }
+
+    .hero .brand {
+      margin: 0 0 12px;
+      font-size: clamp(3.4rem, 17vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -2px;
+      color: #fff;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.18), 0 10px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero .tagline {
+      margin: 0 0 14px;
+      font-size: 1.25rem;
+      font-weight: 500;
+      opacity: 0.95;
+    }
+
+    .hero p {
+      margin: 0 auto 32px;
+      font-size: 1.05rem;
+      font-weight: 400;
+      opacity: 0.9;
+      max-width: 440px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .hero .btn-white,
+    .hero .btn-outline {
+      display: block;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 14px;
+      text-decoration: none;
+    }
+
+    .hero .btn-white {
+      background: #fff;
+      color: #6d28d9;
+    }
+
+    .hero .btn-white:hover { background: #f5f0ff; }
+
+    .hero .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+
+    .hero .btn-outline:hover { background: rgba(255, 255, 255, 0.15); }
+
+    .section-title {
+      text-align: center;
+      color: var(--main-dark);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 32px 0 16px;
+    }
+
+    .steps { display: grid; gap: 12px; }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .step .num {
+      flex: 0 0 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--main);
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step strong { display: block; color: var(--main-dark); font-weight: 600; }
+    .step span { color: var(--muted); font-size: 0.95rem; }
+
+    .extras { display: grid; gap: 10px; }
+
+    .extra {
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .extra strong { color: var(--main-dark); font-weight: 600; }
+    .extra span { display: block; color: var(--muted); font-size: 0.95rem; }
+
+    .safe {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--main);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+
+    .safe strong { color: var(--main-dark); font-weight: 600; }
+
+    .bottom-cta { text-align: center; margin: 32px 0 8px; }
+
+    .bottom-cta .btn {
+      display: block;
+      max-width: 340px;
+      margin: 0 auto 12px;
+      padding: 16px;
+      font-size: 1.1rem;
+    }
+
+    .bottom-cta a.link { color: var(--main-dark); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="brand">SheLearns</h1>
+      <div class="tagline">Welcome! Let's make your study time count.</div>
+      <p>Tell us what you are learning and when you are free. We build a study plan that fits your life and changes as you improve.</p>
+
+      <div class="hero-buttons">
+        <a class="btn-white" href="/register">Get started, it's free</a>
+        <a class="btn-outline" href="/login">I already have an account</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <h2 class="section-title">How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div>
+          <strong>Add your subjects</strong>
+          <span>Tell us which ones feel hard and when your exams are.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div>
+          <strong>Add your free times</strong>
+          <span>Any time you can study, even a short one.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div>
+          <strong>Get your plan</strong>
+          <span>We put the subject that needs you most into each free time.</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">And there is more</h2>
+    <div class="extras">
+      <div class="extra">
+        <strong>Short lessons and book summaries</strong>
+        <span>Quick reads for your free time.</span>
+      </div>
+      <div class="extra">
+        <strong>Study buddies</strong>
+        <span>Meet girls who study the same subjects at the same times.</span>
+      </div>
+      <div class="extra">
+        <strong>Community board</strong>
+        <span>Share tips and ask questions in a safe place.</span>
+      </div>
+    </div>
+
+    <div class="safe">
+      <strong>Your privacy matters.</strong>
+      We only ask for a nickname and a password. We never ask for your email, phone number or real name, and every board post is checked before anyone sees it.
+    </div>
+
+    <div class="bottom-cta">
+      <a class="btn" href="/register">Create my account</a>
+      <a class="link" href="/login">Log in</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

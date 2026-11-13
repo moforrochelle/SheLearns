@@ -1,41 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your plan</title>
-</head>
-<body>
-  <h1>Your plan</h1>
+{% extends "base.html" %}
 
-  <h2>Subjects ranked</h2>
-  <ol>
+{% block title %}Your plan{% endblock %}
+{% block heading %}Your plan{% endblock %}
+
+{% block content %}
+
+  <p class="intro">Here is what to study and when. After each session, tell us how it went and your plan will adjust.</p>
+
+  <div class="card">
+    <h2>Study sessions</h2>
+    {% for r in plan_rows %}
+      <div class="plan-slot">
+        <div class="slot-when">{{ r.slot.day }} &middot; {{ r.slot.start }} to {{ r.slot.end }}</div>
+        <div class="slot-subject">{{ r.subject.name }}</div>
+        <form method="post" action="/log">
+          <input type="hidden" name="subject_id" value="{{ r.subject.id }}">
+          <input type="hidden" name="slot_id" value="{{ r.slot.id }}">
+          <div class="outcomes">
+            <button class="btn-ok" name="outcome" value="understood">Understood</button>
+            <button class="btn-conf" name="outcome" value="confused">Still confused</button>
+            <button class="btn-skip" name="outcome" value="skipped">Skipped</button>
+          </div>
+        </form>
+      </div>
+    {% else %}
+      <p class="empty">No plan yet. Add at least one subject and one free slot on the home page first.</p>
+      <a class="btn full" href="/">Go to home</a>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>Why this order?</h2>
+    <p class="note">The longer the bar, the more this subject needs you. It depends on how hard it feels and how close the exam is.</p>
+
+    {% set top = score(ranked[0]) if ranked else 0 %}
+
     {% for s in ranked %}
-      <li>{{ s.name }}: score {{ score(s)|round(2) }} (weakness {{ s.weakness }})</li>
+      {% set pct = ((score(s) / top) * 100)|round|int if top > 0 else 0 %}
+      <div class="rank-item">
+        <div class="rank-head">
+          <span><span class="rank-num">{{ loop.index }}</span> <strong>{{ s.name }}</strong></span>
+          <span class="meta">Weakness {{ s.weakness }}</span>
+        </div>
+        <div class="bar"><div class="bar-fill" data-pct="{{ pct }}"></div></div>
+        <div class="meta">Score {{ score(s)|round(2) }}{% if s.exam_date %} &middot; Exam: {{ s.exam_date }}{% endif %}</div>
+      </div>
+    {% else %}
+      <p class="empty">No subjects yet.</p>
     {% endfor %}
-  </ol>
+  </div>
 
-  <h2>Study sessions</h2>
-  {% for r in plan_rows %}
-    <div>
-      <p>{{ r.slot.day }} {{ r.slot.start }} to {{ r.slot.end }}: <strong>{{ r.subject.name }}</strong></p>
-      <form method="post" action="/log">
-        <input type="hidden" name="subject_id" value="{{ r.subject.id }}">
-        <input type="hidden" name="slot_id" value="{{ r.slot.id }}">
-        <button name="outcome" value="understood">Understood</button>
-        <button name="outcome" value="confused">Still confused</button>
-        <button name="outcome" value="skipped">Skipped</button>
-      </form>
-    </div>
-  {% endfor %}
-
-  <h2>Session log</h2>
-  <ul>
-    {% for x in sessions %}
-      <li>{{ x.date }}: {{ x.subject }}, {{ x.slot }}, {{ x.outcome }}</li>
+  <div class="card">
+    <h2>Session log</h2>
+    {% for x in (sessions|reverse|list)[:10] %}
+      <div class="log-item">
+        <div>
+          <strong>{{ x.subject }}</strong>
+          <span class="meta">{{ x.date }} &middot; {{ x.slot }}</span>
+        </div>
+        {% if x.outcome == "understood" %}
+          <span class="tag ok">Understood</span>
+        {% elif x.outcome == "confused" %}
+          <span class="tag conf">Still confused</span>
+        {% else %}
+          <span class="tag skip">Skipped</span>
+        {% endif %}
+      </div>
+    {% else %}
+      <p class="empty">No sessions logged yet. After you study, press one of the buttons above.</p>
     {% endfor %}
-  </ul>
+    <p class="note">Showing your 10 most recent sessions.</p>
+  </div>
 
-  <a href="/">Back</a>
-</body>
-</html>
+  <a class="back" href="/">Back to home</a>
+
+  <script>
+    var fills = document.querySelectorAll('.bar-fill');
+    for (var i = 0; i < fills.length; i++) {
+      var pct = parseInt(fills[i].getAttribute('data-pct'), 10) || 0;
+      fills[i].style.width = Math.max(0, Math.min(100, pct)) + '%';
+    }
+  </script>
+
+{% endblock %}

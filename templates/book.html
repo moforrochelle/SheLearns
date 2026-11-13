@@ -1,30 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ book.title }}</title>
-</head>
-<body>
-  <h1>{{ book.title }}</h1>
-  <p>by {{ book.author }}</p>
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }}{% endblock %}
+{% block heading %}{{ book.title }}{% endblock %}
+
+{% block content %}
+
+  <p class="intro">by {{ book.author }}</p>
 
   {% if error %}
-    <p>{{ error }}</p>
-  {% elif summary %}
-    <p style="white-space: pre-wrap;">{{ summary.text }}</p>
+    <div class="notice">{{ error }}</div>
+    <a class="btn full" href="/book/{{ book.id }}">Try again</a>
 
-    <p><small>
-      {% if summary.reviewed %}
-        Reviewed by the SheLearns team.
-      {% else %}
-        Not yet reviewed.
-      {% endif %}
-      This summary was written with AI and may contain errors.
-      Read the real book to get the author's own words.
-    </small></p>
+  {% elif summary %}
+    <div class="card">
+      <div style="white-space: pre-wrap; font-size: 1.05rem; line-height: 1.7;">{{ summary.text }}</div>
+    </div>
+
+    {% if summary.reviewed %}
+      <p class="note"><span class="badge">Checked by a person</span></p>
+    {% else %}
+      <div class="warn">This summary was written by an AI helper and has not been checked against the book yet. Use it to decide whether you want to read the book, not as a replacement for reading it.</div>
+    {% endif %}
   {% endif %}
 
-  <a href="/books">Back to book summaries</a>
-</body>
-</html>
+  <a class="back" href="/books">Back to book summaries</a>
+  <a class="back" href="/">Back to home</a>
+
+{% endblock %}

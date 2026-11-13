@@ -137,6 +137,8 @@
   
   .list .meta { color: var(--muted); font-size: 0.9rem; }
   
+  .meta { color: var(--muted); font-size: 0.9rem; }
+  
   .empty { color: var(--muted); font-style: italic; }
   
   .plan-btn {
@@ -376,3 +378,113 @@
   
   .auth-link { text-align: center; margin-top: 16px; }
   .auth-link a { color: var(--main-dark); font-weight: 600; }
+  
+  /* ---------- Plan page ---------- */
+  .plan-slot {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .plan-slot:last-child { border-bottom: none; }
+  
+  .slot-when {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  
+  .slot-subject {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--main-dark);
+    margin: 2px 0 12px;
+  }
+  
+  .outcomes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .outcomes button {
+    flex: 1 1 110px;
+    padding: 12px 10px;
+    font-size: 0.95rem;
+  }
+  
+  .outcomes .btn-ok { background: #16a34a; }
+  .outcomes .btn-ok:hover { background: #15803d; }
+  
+  .outcomes .btn-conf { background: #ea580c; }
+  .outcomes .btn-conf:hover { background: #c2410c; }
+  
+  .outcomes .btn-skip { background: #6b7280; }
+  .outcomes .btn-skip:hover { background: #4b5563; }
+  
+  .rank-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .rank-item:last-child { border-bottom: none; }
+  
+  .rank-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  
+  .rank-num {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--main);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  
+  .bar {
+    height: 10px;
+    background: var(--soft);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    background: var(--main);
+    border-radius: 999px;
+  }
+  
+  .log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .log-item:last-of-type { border-bottom: none; }
+  
+  .log-item .meta { display: block; }
+  
+  .tag {
+    flex: 0 0 auto;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  
+  .tag.ok { background: #dcfce7; color: #166534; }
+  .tag.conf { background: #ffedd5; color: #9a3412; }
+  .tag.skip { background: #f3f4f6; color: #4b5563; }

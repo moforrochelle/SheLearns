@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ topic.title }}</title>
-</head>
-<body>
-  <h1>{{ topic.title }}</h1>
+{% extends "base.html" %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+{% block heading %}{{ topic.title }}{% endblock %}
+
+{% block content %}
 
   {% if error %}
-    <p>{{ error }}</p>
-  {% elif lesson %}
-    <p style="white-space: pre-wrap;">{{ lesson.text }}</p>
+    <div class="notice">{{ error }}</div>
+    <a class="btn full" href="/lesson/{{ topic.id }}">Try again</a>
 
-    <p><small>
-      {% if lesson.reviewed %}
-        Reviewed by the SheLearns team.
-      {% else %}
-        Not yet reviewed.
-      {% endif %}
-      This lesson was written with AI and may contain errors.
-      Check with a trusted adult or health worker.
-    </small></p>
+  {% elif lesson %}
+    <div class="card">
+      <div style="white-space: pre-wrap; font-size: 1.05rem; line-height: 1.7;">{{ lesson.text }}</div>
+    </div>
+
+    {% if lesson.reviewed %}
+      <p class="note"><span class="badge">Reviewed by the SheLearns team</span></p>
+    {% else %}
+      <p class="note"><span class="badge orange">Not yet reviewed</span></p>
+    {% endif %}
+
+    <div class="warn">This lesson was written with AI and may contain errors. Check with a trusted adult or health worker.</div>
   {% endif %}
 
-  <a href="/lessons">Back to lessons</a>
-</body>
-</html>
+  <a class="back" href="/lessons">Back to lessons</a>
+  <a class="back" href="/">Back to home</a>
+
+{% endblock %}

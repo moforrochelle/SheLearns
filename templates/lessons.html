@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lessons</title>
-</head>
-<body>
-  <h1>Lessons</h1>
-  <p>Short lessons to read in your free time. Pick a topic.</p>
+{% extends "base.html" %}
 
-  <ul>
-    {% for t in topics %}
-      <li>
-        <a href="/lesson/{{ t.id }}">{{ t.title }}</a>
-        {% if t.id in saved %}<small>(ready)</small>{% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+{% block title %}Lessons{% endblock %}
+{% block heading %}Lessons{% endblock %}
 
-  <a href="/">Back</a>
-</body>
-</html>
+{% block content %}
+
+  <p class="intro">Short lessons to read in your free time. Pick a topic.</p>
+
+  {% for t in topics %}
+    <a class="item" href="/lesson/{{ t.id }}">
+      <span>{{ t.title }}</span>
+      {% if t.id in saved %}<span class="badge">Ready</span>{% endif %}
+    </a>
+  {% endfor %}
+
+  <a class="back" href="/">Back to home</a>
+
+{% endblock %}
